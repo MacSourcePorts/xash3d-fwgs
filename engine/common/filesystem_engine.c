@@ -73,10 +73,29 @@ static void FS_UnloadProgs( void )
 
 qboolean FS_LoadProgs( void )
 {
+	char *newname = SDL_GetBasePath();
 	const char *name = FILESYSTEM_STDIO_DLL;
 	FSAPI GetFSAPI;
 
-	fs_hInstance = COM_LoadLibrary( name, false, true );
+	char *lastslash =  strstr(newname, "Resources/");
+
+	if (lastslash)
+	{
+		int   pathLen = lastslash - newname;
+		char *path = (char *) malloc(pathLen);
+		memcpy(path, newname, pathLen);
+		path[pathLen] = '\0';
+
+		// printf("*** FS_LoadProgs filename 2: %s\n", filename);
+		strcat( path, "MacOS/" );	
+		strcat( path, name );
+
+		fs_hInstance = COM_LoadLibrary( path, false, true );
+	}
+	else
+	{
+		fs_hInstance = COM_LoadLibrary( name, false, true );
+	}
 
 	if( !fs_hInstance )
 	{

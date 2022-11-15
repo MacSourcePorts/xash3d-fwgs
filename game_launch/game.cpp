@@ -21,6 +21,8 @@ GNU General Public License for more details.
 #include <stdlib.h>
 #include <stdarg.h>
 
+#include "../engine/common/whereami.h"
+
 #if XASH_POSIX
 #define XASHLIB "libxash." OS_LIB_EXT
 #define LoadLibrary( x ) dlopen( x, RTLD_NOW )
@@ -106,7 +108,23 @@ static void Sys_LoadEngine( void )
 	}
 #endif
 
-	if(( hEngine = LoadLibrary( XASHLIB )) == NULL )
+	size_t exelen;
+	char *exe;
+	
+	exelen = wai_getExecutablePath( NULL, 0, NULL );
+	exe = (char*)malloc( exelen + 1 );
+	wai_getExecutablePath( exe, exelen, NULL );
+	exe[exelen] = 0;
+
+	char *filename =  strrchr(exe, '/') + 1;
+	int   pathLen = filename - exe;
+	char *path = (char *) malloc(pathLen + 1);
+	memcpy(path, exe, pathLen);
+	path[pathLen] = '\0';
+
+	strcat( path, XASHLIB );
+
+	if(( hEngine = LoadLibrary( path )) == NULL )
 	{
 		Xash_Error("Unable to load the " XASHLIB ": %s", dlerror() );
 	}
