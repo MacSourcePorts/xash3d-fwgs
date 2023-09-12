@@ -73,15 +73,15 @@ qboolean FS_LoadProgs( void )
 	if (lastslash)
 	{
 		int   pathLen = lastslash - newname;
-		char *path = (char *) malloc(pathLen);
+		char *path = (char *) malloc(pathLen + sizeof(FILESYSTEM_STDIO_DLL) + sizeof("MacOS/"));
 		memcpy(path, newname, pathLen);
-		path[pathLen] = '\0';
 
-		// printf("*** FS_LoadProgs filename 2: %s\n", filename);
-		strcat( path, "MacOS/" );	
-		strcat( path, name );
-
+		strcat(path, "MacOS/");
+		strcat(path, name);
+		
 		fs_hInstance = COM_LoadLibrary( path, false, true );
+		
+		free(path);
 	}
 	else
 	{
