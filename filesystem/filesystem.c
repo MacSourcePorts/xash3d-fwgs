@@ -1212,6 +1212,21 @@ void FS_Rescan( void )
 
 	FS_AddGameHierarchy( path, FS_GAMEDIR_PATH );
 
+	exelen = wai_getExecutablePath( NULL, 0, NULL );
+	exe = (char*)malloc( exelen + 1 );
+	wai_getExecutablePath( exe, exelen, NULL );
+	exe[exelen] = 0;
+	filename =  strrchr(exe, '/') + 1;
+	pathLen = filename - exe;
+	path = (char *) malloc(pathLen + 1);
+	memcpy(path, exe, pathLen);
+
+	FS_AddArchive_Fullpath( va( "%svalve/extras.pk3", path ), NULL, extrasFlags );
+
+	path[pathLen - 1] = '\0';
+
+	FS_AddGameHierarchy( path, FS_GAMEDIR_PATH );
+
 	if( Q_stricmp( GI->basedir, GI->gamefolder ))
 		FS_AddGameHierarchy( GI->basedir, 0 );
 	if( Q_stricmp( GI->basedir, GI->falldir ) && Q_stricmp( GI->gamefolder, GI->falldir ))
