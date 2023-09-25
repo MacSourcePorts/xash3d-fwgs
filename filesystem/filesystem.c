@@ -1221,7 +1221,8 @@ void FS_Rescan( void )
 	path = (char *) malloc(pathLen + 1);
 	memcpy(path, exe, pathLen);
 
-	FS_AddArchive_Fullpath( va( "%svalve/extras.pk3", path ), NULL, extrasFlags );
+	Q_snprintf( buf, sizeof( buf ), "%svalve/extras.pk3", path );
+	FS_MountArchive_Fullpath( buf, extrasFlags );
 
 	path[pathLen - 1] = '\0';
 
