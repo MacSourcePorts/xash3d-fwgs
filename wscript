@@ -277,6 +277,9 @@ def configure(conf):
 	conf.check_cc(cflags=cflags, linkflags=linkflags, msg='Checking for required C flags')
 	conf.check_cxx(cxxflags=cxxflags, linkflags=linkflags, msg='Checking for required C++ flags')
 
+	cflags += ['-mmacosx-version-min=10.9']
+	linkflags += ['-mmacosx-version-min=10.9']
+
 	conf.env.append_unique('CFLAGS', cflags)
 	conf.env.append_unique('CXXFLAGS', cxxflags)
 	conf.env.append_unique('LINKFLAGS', linkflags)

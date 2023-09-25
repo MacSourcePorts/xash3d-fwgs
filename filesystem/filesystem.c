@@ -1180,6 +1180,7 @@ void FS_Rescan( void )
 	char *filename;
 	int   pathLen;
 	char *path;
+	char	buf[MAX_VA_STRING];
 
 	searchpath_t	*x;
 
@@ -1204,7 +1205,8 @@ void FS_Rescan( void )
 	path = (char *) malloc(pathLen + 1);
 	memcpy(path, exe, pathLen);
 
-	FS_AddArchive_Fullpath( va( "%svalve/extras.pk3", path ), NULL, extrasFlags );
+	Q_snprintf( buf, sizeof( buf ), "%svalve/extras.pk3", path );
+	FS_MountArchive_Fullpath( buf, extrasFlags );
 
 	path[pathLen - 1] = '\0';
 
@@ -1967,8 +1969,8 @@ file_t *FS_Open( const char *filepath, const char *mode, qboolean gamedironly )
 		return NULL;
 
 	// some mappers used leading '/' or '\' in path to models or sounds
-	if( filepath[0] == '/' || filepath[0] == '\\' )
-		filepath++;
+	// if( filepath[0] == '/' || filepath[0] == '\\' )
+	// 	filepath++;
 
 	// if( filepath[0] == '/' || filepath[0] == '\\' )
 	// 	filepath++;

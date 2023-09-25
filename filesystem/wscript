@@ -24,9 +24,11 @@ def build(bld):
 	else:
 		libs += [ 'public' ]
 
+	source = bld.path.ant_glob(['*.c', '*.cpp'])
+	source += ['../engine/common/whereami.c']
 	bld.shlib(target = 'filesystem_stdio',
 		features = 'cxx seq',
-		source = bld.path.ant_glob(['*.c', '*.cpp']),
+		source = source,
 		use = libs,
 		install_path = bld.env.LIBDIR,
 		subsystem = bld.env.MSVC_SUBSYSTEM)

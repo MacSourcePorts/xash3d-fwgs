@@ -22,7 +22,7 @@ def configure(conf):
 
 def build(bld):
 	libs = ['sdk_includes']
-	source = ['game.cpp']
+	source = ['game.cpp', '../engine/common/whereami.c']
 	defines = []
 
 	if bld.env.DEST_OS != 'win32':

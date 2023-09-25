@@ -1026,7 +1026,6 @@ void Host_InitCommon( int argc, char **argv, const char *progname, qboolean bCha
 #elif (XASH_SDL == 2) && !XASH_NSWITCH // GetBasePath not impl'd in switch-sdl2
 		char *szBasePath;
 
-		// if( !( szBasePath = SDL_GetBasePath() ) )
 		if( !( szBasePath = SDL_GetPrefPath(NULL, "Xash3D") ) )
 			Sys_Error( "couldn't determine current directory: %s", SDL_GetError() );
 		Q_strncpy( host.rootdir, szBasePath, sizeof( host.rootdir ));
