@@ -118,7 +118,7 @@ static void Sys_LoadEngine( void )
 
 	char *filename =  strrchr(exe, '/') + 1;
 	int   pathLen = filename - exe;
-	char *path = (char *) malloc(pathLen + 1);
+	char *path = (char *) malloc(pathLen + sizeof(XASHLIB) + 1);
 	memcpy(path, exe, pathLen);
 	path[pathLen] = '\0';
 
